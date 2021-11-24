@@ -1,0 +1,7 @@
+In Order:
+-> Add negation
+-> monadic and dyadic operator types
+-> Add reduce for arrays
+-> Add operations between int and arrays
+-> Add 3D arrays
+-> Add BigInt functionality
