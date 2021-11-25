@@ -19,7 +19,8 @@ class Lexer(tokens: List<Token>) {
     
     fun lex(): Expression = lexExpression()
     
-    private fun lexExpression(): Expression = buildList {
+    @Suppress("RemoveExplicitTypeArguments")
+    private fun lexExpression(): Expression = buildList<Expression> {
         while (true) when (tokens.peekPreviousSkipWT) {
             is ConstantToken -> {
                 if (size > 0) add(lexArrayExpression(removeLast()))
@@ -27,8 +28,9 @@ class Lexer(tokens: List<Token>) {
             }
             is OperatorToken -> {
                 val operator = tokens.previousSkipWT as OperatorToken
-                val expression = removeLastOrNull() ?: throw LexerException("Expected expression after '$operator'")
-                
+                val expression = removeLastOrNull()
+                    ?: throw LexerException("Expected expression after '$operator'")
+
                 if (operator.isPotentialUnary) when (tokens.peekPreviousSkipWT) {
                     null, OPEN_PAREN -> add(lexUnaryExpression(operator, expression))
                     else -> add(lexBinaryExpression(operator, expression))
